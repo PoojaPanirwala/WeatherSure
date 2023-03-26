@@ -10,6 +10,10 @@ Home Page
 <img width="269" alt="image" src="https://user-images.githubusercontent.com/90343780/227028689-fae9a7ee-1c60-47f9-9bf2-99fde5fb4898.png">
 <img width="232" alt="image" src="https://user-images.githubusercontent.com/90343780/227028728-38934c42-e077-4ed5-a05a-0d11d5972fb5.png">
 
+Settings Page
+
+<img width="247" alt="image" src="https://user-images.githubusercontent.com/90343780/227796838-0c3b3afc-80ad-4f73-b269-fd018353fcc3.png">
+
 
 Feedback Page
 
