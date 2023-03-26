@@ -9,6 +9,8 @@ import SwiftUI
 
 struct HomeView: View {
     @State private var search = ""
+    @State private var selectedTime = Date()
+    @State private var showToggle = true
     var body: some View {
         ZStack {
             
@@ -123,7 +125,97 @@ struct HomeView: View {
                     }
                 
                 // Third tab content for Settings
-                Text("Settings")
+                NavigationView {
+                    // Second tab content for Saved Locations
+                    ZStack {
+                        Color(red: 0.902, green: 0.890, blue: 0.851)
+                            .ignoresSafeArea(.all)
+                        Text("Settings")
+                        .foregroundColor(Color.brown)
+                        .font(.system(size: 24, weight: .bold))
+                        .offset(y: -UIScreen.main.bounds.height / 3)
+//                        .offset(x:-UIScreen.main.bounds.width / 3)
+                        VStack {
+                            Toggle("Send Notification",isOn: $showToggle)
+                                .font(.system(size: 18, weight: .medium))
+                                .offset(y: -UIScreen.main.bounds.height / 4)
+                                .padding()
+                        }
+                        VStack {
+                                Text("Notification Time")
+                                .font(.system(size: 18, weight: .medium))
+                                .offset(y: -UIScreen.main.bounds.height / 8)
+                                .offset(x:-UIScreen.main.bounds.width / 3.6)
+                                
+                                    DatePicker(
+                                        "",
+                                        selection: $selectedTime,
+                                        displayedComponents: .hourAndMinute
+                                    )
+                                    .datePickerStyle(GraphicalDatePickerStyle())
+                                    .font(.system(size: 18, weight: .medium))
+                                    .offset(y: -UIScreen.main.bounds.height / 5)
+                                    .padding()
+                                }
+                        VStack {
+                            Text("About WeatherSure")
+                                .foregroundColor(Color.brown)
+                                .font(.system(size: 20, weight: .bold))
+                                .offset(y: -UIScreen.main.bounds.height / 9)
+                                .offset(x:-UIScreen.main.bounds.width / 4.4)
+                                .padding()
+                        }
+                        VStack {
+                            Text("WeatherSure is a Weather Application. The purpose of the project is to develop an application in which users can view current temperature and other weather- related details of a particular location.")
+                                .frame(maxWidth: .infinity)
+                                .multilineTextAlignment(.leading)
+                                .padding()
+                                .offset(y: UIScreen.main.bounds.height / 80)
+                        }
+                        VStack {
+                            NavigationLink("Personalize your notifications here", destination: PersonalizationView())
+                                .foregroundColor(Color.blue)
+                                .font(.system(size: 18, weight: .medium))
+                                .offset(y: UIScreen.main.bounds.height / 8)
+                                .offset(x:-UIScreen.main.bounds.width / 11)
+                                .padding()
+                                
+                        }
+                        VStack {
+                            NavigationLink("How to Integrate WeatherApp to other apps?", destination: IntegrationView())
+                                .frame(maxWidth: .infinity)
+                                .multilineTextAlignment(.leading)
+                                .foregroundColor(Color.blue)
+                                .font(.system(size: 18, weight: .medium))
+                                .offset(y: UIScreen.main.bounds.height / 6)
+                                .offset(x:UIScreen.main.bounds.width / 70)
+//                                .padding()
+                        }
+                        VStack {
+                            Text("Contact Us")
+                                .foregroundColor(Color.brown)
+                                .font(.system(size: 20, weight: .bold))
+                                .offset(y: UIScreen.main.bounds.height / 3.5)
+                                .offset(x:-UIScreen.main.bounds.width / 3.1)
+                                .padding()
+                            Text("contactus@weathersure.com")
+                                .font(.system(size: 16, weight: .semibold))
+                                .offset(y: UIScreen.main.bounds.height / 4)
+                                .offset(x:-UIScreen.main.bounds.width / 5.8)
+                                .padding()
+                        }
+                        VStack {
+                            NavigationLink("We appreciate your feedback!", destination: FeedbackView())
+                                .frame(maxWidth: .infinity)
+                                .multilineTextAlignment(.leading)
+                                .foregroundColor(Color.blue)
+                                .font(.system(size: 18, weight: .medium))
+                                .offset(y: UIScreen.main.bounds.height / 3)
+                                .offset(x:-UIScreen.main.bounds.width / 7)
+//                                .padding()
+                        }
+                    }
+                }
                     .tabItem {
                         Image(systemName: "gear")
                         Text("Settings")
@@ -140,4 +232,9 @@ struct HomeView: View {
             HomeView()
         }
     }
+    let timeFormatter: DateFormatter = {
+            let formatter = DateFormatter()
+            formatter.timeStyle = .short
+            return formatter
+        }()
 }
