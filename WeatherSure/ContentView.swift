@@ -101,9 +101,11 @@ struct ContentView: View {
                                     .padding(.horizontal)
                                     .offset(y: UIScreen.main.bounds.height / 20)
                                 
-                                Button("Sign Up") {
-                                    /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
-                                }
+                                Button(action: {
+                                                navigateToLoginView()
+                                            }) {
+                                                Text("SignUp")
+                                            }
                                 .padding()
                                 .background(Color.white)
                                 .foregroundColor(Color.black)
@@ -138,9 +140,11 @@ struct ContentView: View {
                                 .font(.system(size: 19, weight: .bold))
                                 .offset(y: UIScreen.main.bounds.height / 30)
                                 
-                                Button("Log In") {
-                                    /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Action@*/ /*@END_MENU_TOKEN@*/
-                                }
+                                Button(action: {
+                                                navigateToHomeView()
+                                            }) {
+                                                Text("LogIn")
+                                            }
                                 .padding()
                                 .background(Color.white)
                                 .foregroundColor(Color.black)
@@ -150,6 +154,18 @@ struct ContentView: View {
                             }
                         }
         }
+    }
+    func navigateToHomeView() {
+        let homeView = HomeView()
+        let homeViewWrapper = NavigationView { homeView }
+        UIApplication.shared.windows.first?.rootViewController = UIHostingController(rootView: homeViewWrapper)
+        UIApplication.shared.windows.first?.makeKeyAndVisible()
+    }
+    func navigateToLoginView() {
+        let homeView = ContentView()
+        let homeViewWrapper = NavigationView { homeView }
+        UIApplication.shared.windows.first?.rootViewController = UIHostingController(rootView: homeViewWrapper)
+        UIApplication.shared.windows.first?.makeKeyAndVisible()
     }
 }
 
