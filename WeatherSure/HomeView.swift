@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct HomeView: View {
+    @StateObject private var weatherAPIClient = WeatherAPIClient()
     @State private var search = ""
     @State private var selectedTime = Date()
     @State private var showToggle = true
@@ -19,6 +20,7 @@ struct HomeView: View {
                 NavigationView {
                     
                     ZStack {
+                        
                         Color(red: 0.902, green: 0.890, blue: 0.851)
                             .ignoresSafeArea(.all)
                         Text("LOCATIONS")
@@ -28,33 +30,33 @@ struct HomeView: View {
                             List {
                                 
                                 // Show current location at the top
-                                HStack {
-                                    
-                                    Text("Current Location")
-                                    Spacer()
-                                    Text("72°F")
-                                }
-                                .padding(.vertical)
-                                
-                                // Example location and temperature data
-                                HStack {
-                                    Text("New York")
-                                    Spacer()
-                                    Text("60°F")
-                                }
-                                .padding(.vertical)
-                                HStack {
-                                    Text("Los Angeles")
-                                    Spacer()
-                                    Text("70°F")
-                                }
-                                .padding(.vertical)
-                                HStack {
-                                    Text("Chicago")
-                                    Spacer()
-                                    Text("55°F")
-                                }
-                                .padding(.vertical)
+//                                HStack {
+//                                    
+//                                    Text("Current Location")
+//                                    Spacer()
+//                                    Text("72°F")
+//                                }
+//                                .padding(.vertical)
+//                                
+//                                // Example location and temperature data
+//                                HStack {
+//                                    Text("New York")
+//                                    Spacer()
+//                                    Text("60°F")
+//                                }
+//                                .padding(.vertical)
+//                                HStack {
+//                                    Text("Los Angeles")
+//                                    Spacer()
+//                                    Text("70°F")
+//                                }
+//                                .padding(.vertical)
+//                                HStack {
+//                                    Text("Chicago")
+//                                    Spacer()
+//                                    Text("55°F")
+//                                }
+//                                .padding(.vertical)
                             }
                             .listStyle(PlainListStyle())
                             .padding(.top, 50)
@@ -72,7 +74,12 @@ struct HomeView: View {
                             .padding(.bottom, 10)
                             .offset(y: -UIScreen.main.bounds.height / 4)
                     }
-                    
+                    .onAppear {
+//                                Task {
+//                                    await weatherAPIClient.fetchWeather()
+//                                }
+                        getWeather()
+                            }
                     //.navigationBarTitle(Text("Home"))
                 }
                 .tabItem {
@@ -237,4 +244,32 @@ struct HomeView: View {
             formatter.timeStyle = .short
             return formatter
         }()
+    func getWeather(){
+                    if let currentWeather = weatherAPIClient.currentWeather  {
+                        HStack(alignment: .center, spacing: 16) {
+//                            currentCondition?.icon.image
+//                                .font(.largeTitle)
+                            Text("\(currentWeather.tempC)º")
+                                .font(.largeTitle)
+                        }
+                        Text((currentWeather.condition.text)!)
+                            .font(.body)
+                            .multilineTextAlignment(.center)
+                    } else {
+                        Text("No weather info available yet.\nTap on refresh to fetch new data.\nMake sure you have enabled location permissions for the app.")
+                            .font(.body)
+                            .multilineTextAlignment(.center)
+                        Button("Refresh", action: {
+                            Task {
+                                await weatherAPIClient.fetchWeather()
+                            }
+                        })
+                }
+            
+            }
+//        .onAppear {
+//            Task {
+//                await weatherAPIClient.fetchWeather()
+//            }
+//        }
 }
